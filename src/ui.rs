@@ -8,7 +8,7 @@ use std::time::Duration;
 // Emojis for different states
 static LOOKING_GLASS: Emoji<'_, '_> = Emoji("🔍 ", "");
 static TRUCK: Emoji<'_, '_> = Emoji("🚚 ", "");
-static CLIP: Emoji<'_, '_> = Emoji("📎 ", "");
+// static CLIP: Emoji<'_, '_> = Emoji("📎 ", ""); // Unused
 static HOURGLASS: Emoji<'_, '_> = Emoji("⏳ ", "");
 static SPARKLE: Emoji<'_, '_> = Emoji("✨ ", "");
 static ROCKET: Emoji<'_, '_> = Emoji("🚀 ", "");
@@ -121,7 +121,7 @@ impl VerboseUI {
         let pb = self.multi_progress.add(ProgressBar::new(total_size));
         pb.set_style(
             ProgressStyle::default_bar()
-                .template(&format!("{{prefix}}\n{{bar:40.cyan/blue}} {{percent:>3}}% {{bytes}}/{{total_bytes}} {{msg}}"))
+                .template("{{prefix}}\n{{bar:40.cyan/blue}} {{percent:>3}}% {{bytes}}/{{total_bytes}} {{msg}}")
                 .unwrap()
                 .progress_chars("█▓▒░")
         );
@@ -261,8 +261,7 @@ impl VerboseUI {
         pb.set_style(
             ProgressStyle::default_bar()
                 .template(&format!(
-                    "  Pages {}-{}: [{{bar:30.green/red}}] {{msg}}",
-                    start_page, end_page
+                    "  Pages {start_page}-{end_page}: [{{bar:30.green/red}}] {{msg}}"
                 ))
                 .unwrap()
                 .progress_chars("═╾─"),
@@ -275,18 +274,18 @@ impl VerboseUI {
         pb.set_position(progress);
         match status {
             "processing" => {
-                pb.set_message(format!("{} Processing...", HOURGLASS));
+                pb.set_message(format!("{HOURGLASS} Processing..."));
             }
             "completed" => {
-                pb.set_message(format!("{} Completed!", CHECKMARK));
+                pb.set_message(format!("{CHECKMARK} Completed!"));
                 pb.finish();
             }
             "failed" => {
-                pb.set_message(format!("{} Failed!", ERROR));
+                pb.set_message(format!("{ERROR} Failed!"));
                 pb.abandon();
             }
             "rate_limited" => {
-                pb.set_message(format!("{} Rate limited, waiting...", WARNING));
+                pb.set_message(format!("{WARNING} Rate limited, waiting..."));
             }
             _ => {}
         }
@@ -326,7 +325,7 @@ impl VerboseUI {
         println!(
             "\n{} {} {}",
             SPARKLE,
-            style(format!("Chunk {} extraction complete:", chunk_num))
+            style(format!("Chunk {chunk_num} extraction complete:"))
                 .green()
                 .bold(),
             SPARKLE
@@ -417,5 +416,11 @@ impl VerboseUI {
         println!("{}", style("─".repeat(65)).red());
         println!("{}", style(error).red());
         println!("{}", style("─".repeat(65)).red());
+    }
+}
+
+impl Default for VerboseUI {
+    fn default() -> Self {
+        Self::new()
     }
 }

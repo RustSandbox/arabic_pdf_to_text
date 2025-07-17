@@ -44,7 +44,7 @@ pub async fn process_pdf(path: &str, config: &Config) -> Result<String> {
 
     // Process in page ranges
     let pages_per_chunk = 5; // Process 5 pages at a time
-    let total_pages = 30; // Start with first 30 pages for testing
+    let total_pages: usize = 30; // Start with first 30 pages for testing
     let num_chunks = (total_pages + pages_per_chunk - 1) / pages_per_chunk;
 
     ui.print_processing_start(num_chunks, pages_per_chunk);
@@ -135,7 +135,7 @@ pub async fn process_pdf(path: &str, config: &Config) -> Result<String> {
                     Err(e) => {
                         let pb_lock = pb.lock().await;
                         ui.update_chunk_progress(&pb_lock, "failed", 100);
-                        ui.print_error(&format!("Failed pages {}-{}: {}", start_page, end_page, e));
+                        ui.print_error(&format!("Failed pages {start_page}-{end_page}: {e}"));
                     }
                 }
 
@@ -162,8 +162,8 @@ pub async fn process_pdf(path: &str, config: &Config) -> Result<String> {
                 let start = index * pages_per_chunk + 1;
                 let end = ((index + 1) * pages_per_chunk).min(total_pages);
                 failed_ranges.push((start, end));
-                eprintln!("Pages {}-{} failed: {}", start, end, e);
-                results[index] = format!("[Pages {}-{} failed to process]", start, end);
+                eprintln!("Pages {start}-{end} failed: {e}");
+                results[index] = format!("[Pages {start}-{end} failed to process]");
             }
         }
     }

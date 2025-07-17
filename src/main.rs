@@ -1,7 +1,6 @@
 use anyhow::Result;
 use arabic_pdf_to_text::{process_pdf, Config};
 use clap::Parser;
-use console;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -64,7 +63,7 @@ async fn main() -> Result<()> {
         println!(
             "{} {}",
             console::style("✅").green(),
-            console::style(format!("Output saved to: {}", output_path))
+            console::style(format!("Output saved to: {output_path}"))
                 .green()
                 .bold()
         );
@@ -86,7 +85,7 @@ async fn main() -> Result<()> {
             console::style("EXTRACTED TEXT").cyan().bold().underlined()
         );
         println!("{}", console::style("═".repeat(65)).cyan().bright());
-        println!("\n{}", result);
+        println!("\n{result}");
         println!("\n{}", console::style("═".repeat(65)).cyan().bright());
     }
 

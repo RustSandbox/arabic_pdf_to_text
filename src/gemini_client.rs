@@ -127,7 +127,7 @@ impl GeminiClient {
         println!(
             "\n{} {}",
             "🔐".cyan(),
-            format!("Initiating secure file transfer for: {}", display_name)
+            format!("Initiating secure file transfer for: {display_name}")
                 .cyan()
                 .bold()
         );
@@ -226,7 +226,7 @@ impl GeminiClient {
         println!(
             "\n{} {}",
             "🎉".green(),
-            format!("File uploaded successfully!").green().bold()
+            "File uploaded successfully!".green().bold()
         );
         println!(
             "  {} Upload ID: {}",
@@ -263,11 +263,10 @@ impl GeminiClient {
                 parts: vec![
                     Part::Text {
                         text: format!(
-                            "Extract all text from pages {} to {} of this PDF document. \
+                            "Extract all text from pages {start_page} to {end_page} of this PDF document. \
                                 Return ONLY the text content from those specific pages, \
                                 preserving all Arabic text exactly as it appears. \
-                                If these pages don't exist, return an empty response.",
-                            start_page, end_page
+                                If these pages don't exist, return an empty response."
                         ),
                     },
                     Part::FileData {
@@ -295,10 +294,7 @@ impl GeminiClient {
             .timeout(std::time::Duration::from_secs(120))
             .send()
             .await
-            .context(format!(
-                "Failed to process pages {}-{}",
-                start_page, end_page
-            ))?;
+            .context(format!("Failed to process pages {start_page}-{end_page}"))?;
 
         if !response.status().is_success() {
             let error_text = response.text().await?;
@@ -311,8 +307,7 @@ impl GeminiClient {
         }
 
         let gemini_response: GeminiResponse = response.json().await.context(format!(
-            "Failed to parse response for pages {}-{}",
-            start_page, end_page
+            "Failed to parse response for pages {start_page}-{end_page}"
         ))?;
 
         gemini_response
