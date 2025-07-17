@@ -45,6 +45,7 @@ pub async fn process_pdf(path: &str, config: &Config) -> Result<String> {
     // Process in page ranges
     let pages_per_chunk = 5; // Process 5 pages at a time
     let total_pages: usize = 30; // Start with first 30 pages for testing
+    #[allow(clippy::manual_div_ceil)]
     let num_chunks = (total_pages + pages_per_chunk - 1) / pages_per_chunk;
 
     ui.print_processing_start(num_chunks, pages_per_chunk);
