@@ -1,0 +1,9 @@
+*.txt
+*.log
+*.pdf
+*.docx
+*.xlsx
+VERBOSE_UI.md
+test_*.*
+target/
+target/*
