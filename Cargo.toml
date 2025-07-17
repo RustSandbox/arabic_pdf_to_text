@@ -2,6 +2,18 @@
 name = "arabic_pdf_to_text"
 version = "0.1.0"
 edition = "2021"
+authors = ["RustSandbox"]
+description = "A CLI tool to convert Arabic PDFs to text using Google's Gemini API"
+readme = "README.md"
+homepage = "https://github.com/RustSandbox/arabic_pdf_to_text"
+repository = "https://github.com/RustSandbox/arabic_pdf_to_text"
+license = "MIT"
+keywords = ["pdf", "arabic", "text-extraction", "gemini-api", "cli"]
+categories = ["command-line-utilities", "text-processing"]
+
+[[bin]]
+name = "arabic_pdf_to_text"
+path = "src/main.rs"
 
 [dependencies]
 tokio = { version = "1", features = ["full"] }

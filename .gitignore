@@ -1,9 +1,39 @@
+# Build artifacts
+target/
+Cargo.lock
+
+# Test outputs and logs
 *.txt
 *.log
+test_*.*
+output_*.txt
+run_log.txt
+test_log.txt
+
+# Documents (exclude test PDFs from repo)
 *.pdf
 *.docx
 *.xlsx
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Documentation drafts
 VERBOSE_UI.md
-test_*.*
-target/
-target/*
+
+# Temporary files
+*.tmp
+*.bak
