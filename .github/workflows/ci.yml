@@ -68,7 +68,7 @@ jobs:
       run: cargo build --release --verbose
     
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: arabic_pdf_to_text
         path: target/release/arabic_pdf_to_text
